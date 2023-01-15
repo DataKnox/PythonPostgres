@@ -7,7 +7,7 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 from sqlalchemy import create_engine
 
-db_name = 'database'
+db_name = 'postgres'
 db_user = 'postgres'
 db_pass =  os.getenv('DBPASS')
 db_host = 'db'

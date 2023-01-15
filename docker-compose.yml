@@ -15,6 +15,17 @@ services:
       main:
         aliases:
           - db
+  discord:
+    build:
+      context: .
+      dockerfile: Dockerfile.discord
+    restart: always
+    depends_on:
+      - db
+    networks:
+      main:
+        aliases:
+          - discord
   api:
     build:
       context: .
@@ -27,7 +38,7 @@ services:
     networks:
       main:
         aliases:
-          - api    
+          - api
 volumes:
   db:
     driver: local
