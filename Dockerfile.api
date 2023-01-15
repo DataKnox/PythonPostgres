@@ -5,4 +5,5 @@ COPY requirements_api.txt .
 RUN pip install -r requirements_api.txt
 COPY . .
 
-CMD ["python3","api.py"]
+COPY app.py /home/app.py
+ENTRYPOINT FLASK_APP=/home/app.py flask run --host=0.0.0.0
