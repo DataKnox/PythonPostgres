@@ -1,6 +1,5 @@
 python-dotenv
 psycopg2-binary
 sqlalchemy
-discord
 psycopg2
-flask
+fastapi

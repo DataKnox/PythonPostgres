@@ -34,7 +34,7 @@ services:
     depends_on:
       - db
     ports:
-      - '0.0.0.0:8080:5000'
+      - '0.0.0.0:8080:80'
     networks:
       main:
         aliases:

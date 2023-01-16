@@ -1,9 +1,8 @@
-FROM python:3.8-slim-buster
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11
+
 RUN apt update && apt install libpq-dev gcc -y
 RUN python3 -m ensurepip --upgrade
-COPY requirements_api.txt .
-RUN pip install -r requirements_api.txt
-COPY . .
+COPY requirements_api.txt /app/requirements_api.txt
+RUN pip install -r /app/requirements_api.txt
 
-COPY app.py /home/app.py
-ENTRYPOINT FLASK_APP=/home/app.py flask run --host=0.0.0.0
+COPY ./app /app
