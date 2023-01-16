@@ -30,6 +30,6 @@ def read_item(item_id: int, q: str = None):
 
 
 @app.get("/test")
-def testquery(api_key: APIKey = Depends(auth.get_api_key)):
+async def testquery(api_key: APIKey = Depends(auth.get_api_key)):
     df = pd.read_sql("SELECT table_name FROM information_schema.tables", con)
     return df.to_json(orient="records")
