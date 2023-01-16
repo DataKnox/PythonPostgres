@@ -4,5 +4,5 @@ RUN apt update && apt install libpq-dev gcc -y
 RUN python3 -m ensurepip --upgrade
 COPY requirements_api.txt /app/requirements_api.txt
 RUN pip install -r /app/requirements_api.txt
-
+COPY .env /app/.env
 COPY ./app /app
