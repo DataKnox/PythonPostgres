@@ -23,16 +23,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.discord
-    image: stakeappgrp.azurecr.io/discord
     restart: always
-    deploy:
-      resources:
-        reservations:
-          cpus: '0.5'
-          memory: 2G
-        limits:
-          cpus: '1'
-          memory: 3G
     depends_on:
       - db
     networks:
@@ -43,12 +34,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.api
-    image: stakeappgrp.azurecr.io/api
     restart: always
     depends_on:
       - db
     ports:
-      - '0.0.0.0:80:80'
+      - '0.0.0.0:8080:80'
     networks:
       main:
         aliases:
@@ -57,16 +47,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.load
-    image: stakeappgrp.azurecr.io/loader
     restart: always
-    deploy:
-      resources:
-        reservations:
-          cpus: '0.5'
-          memory: 2G
-        limits:
-          cpus: '1'
-          memory: 3G
     depends_on:
       - db
     networks:
@@ -75,10 +56,7 @@ services:
           - loader
 volumes:
   db:
-    driver: azure_file
-    driver_opts:
-      share_name: pgdata
-      storage_account_name: pgdatashare
+    driver: local
 networks:
   main:
 secrets:

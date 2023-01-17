@@ -2,15 +2,13 @@ from sqlalchemy import create_engine
 import os
 from dotenv import load_dotenv
 import discord
-import time
-import random
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-db_name = 'initdb'
+db_name = 'postgres'
 db_user = os.getenv('DBUSER')
 db_pass = os.getenv('DBPASS')
-db_host = 'db'
+db_host = 'stakoor.postgres.database.azure.com'
 db_port = '5432'
 
 # Connecto to the database
