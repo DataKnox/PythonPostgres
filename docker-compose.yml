@@ -43,6 +43,16 @@ services:
       main:
         aliases:
           - api
+  loader:
+    build:
+      context: .
+      dockerfile: Dockerfile.load
+    restart: always
+    depends_on: db
+    networks:
+      main:
+        aliases:
+          - loader
 volumes:
   db:
     driver: local

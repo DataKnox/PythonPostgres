@@ -1,0 +1,8 @@
+FROM python:3.8-slim-buster
+RUN apt update && apt install libpq-dev gcc -y
+RUN python3 -m ensurepip --upgrade
+COPY requirements_load.txt requirements_load.txt
+RUN pip install -r requirements_load.txt
+COPY .env .env
+COPY ./loader/main.py main.py
+CMD ["python3","main.py"]
