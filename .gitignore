@@ -1,2 +1,3 @@
 .env
 postgres_pw.txt
+postgres_user.txt
