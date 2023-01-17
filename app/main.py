@@ -7,8 +7,8 @@ from fastapi.security.api_key import APIKey
 import auth
 load_dotenv()
 app = FastAPI()
-db_name = 'postgres'
-db_user = 'postgres'
+db_name = 'initdb'
+db_user = os.getenv('DBUSER')
 db_pass = os.getenv('DBPASS')
 db_host = 'db'
 db_port = '5432'
