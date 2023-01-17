@@ -28,7 +28,7 @@ while True:
             for n in r['nfts']:
                 nft_id = n['id']
                 sql = f"INSERT INTO hhsnap (wallet,token) VALUES ('{wallet}','{nft_id}')"
-                print(sql)
+                # print(sql)
                 try:
                     con.execute(sql)
                 except (Exception, exc.DatabaseError) as error:
