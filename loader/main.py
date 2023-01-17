@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, exc
 from dotenv import load_dotenv
 from time import sleep
 
@@ -18,10 +18,24 @@ db_string = f'postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}'
 db = create_engine(db_string)
 
 while True:
-    response = requests.get(
-        f"https://api.matrica.io/v1/snapshot/role/936808864798617620?apiKey={matrica_key}").json()
-    for r in response:
-        print(f"wallet is {r['id']}")
-        for n in r['nfts']:
-            print(n['id'])
+    print("was true")
+    try:
+        con = db.connect()
+        response = requests.get(
+            f"https://api.matrica.io/v1/snapshot/role/936808864798617620?apiKey={matrica_key}").json()
+        for r in response:
+            wallet = r['id']
+            for n in r['nfts']:
+                nft_id = n['id']
+                sql = f"INSERT INTO hhsnap (wallet,token) VALUES ('{wallet}','{nft_id}')"
+                print(sql)
+                try:
+                    con.execute(sql)
+                except (Exception, exc.DatabaseError) as error:
+                    print(error)
+    except (Exception, exc.DatabaseError) as error:
+        print(error)
+    finally:
+        if con is not None:
+            con.close()
     sleep(10)
