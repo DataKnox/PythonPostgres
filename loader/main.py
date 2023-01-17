@@ -1,5 +1,4 @@
 import os
-import json
 import requests
 from sqlalchemy import create_engine, exc
 from dotenv import load_dotenv
