@@ -38,4 +38,4 @@ while True:
     finally:
         if con is not None:
             con.close()
-    sleep(10)
+    sleep(3600)
