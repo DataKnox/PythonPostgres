@@ -12,12 +12,11 @@ db_pass = os.getenv('DBPASS')
 db_host = os.getenv('DBHOST')
 db_port = '5432'
 matrica_key = os.getenv('MATRICAKEY')
-# Connecto to the database
+
 db_string = f'postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}'
 db = create_engine(db_string)
 role_id = os.getenv('ROLE_ID')
 while True:
-    print("was true")
     try:
         con = db.connect()
         response = requests.get(
@@ -27,10 +26,8 @@ while True:
             get_user = f"SELECT discordid FROM hhuser WHERE wallet='{wallet}'"
             try:
                 if con.execute(get_user).first() == None:
-                    print('was none')
                     user = requests.get(
                         f"https://api.matrica.io/v1/wallet/{wallet}?apiKey={matrica_key}").json()
-                    print(user)
                     isql = f"INSERT INTO hhuser (wallet, discordid) VALUES ('{wallet}','{user['discordId']}')"
                     try:
                         con.execute(isql)
@@ -43,12 +40,10 @@ while True:
             for n in r['nfts']:
                 nft_id = n['id']
                 sql = f"INSERT INTO hhsnap (wallet,token) VALUES ('{wallet}','{nft_id}')"
-
-                print(sql)
-                # try:
-                #     con.execute(sql)
-                # except (Exception, exc.DatabaseError) as error:
-                #     print(error)
+                try:
+                    con.execute(sql)
+                except (Exception, exc.DatabaseError) as error:
+                    print(error)
     except (Exception, exc.DatabaseError) as error:
         print(error)
     finally:
