@@ -5,10 +5,10 @@ import discord
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-db_name = 'postgres'
+db_name = os.getenv('DBNAME')
 db_user = os.getenv('DBUSER')
 db_pass = os.getenv('DBPASS')
-db_host = 'stakoor.postgres.database.azure.com'
+db_host = os.getenv('DBHOST')
 db_port = '5432'
 
 # Connecto to the database

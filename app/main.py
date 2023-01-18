@@ -7,10 +7,10 @@ from fastapi.security.api_key import APIKey
 import auth
 load_dotenv()
 app = FastAPI()
-db_name = 'postgres'
+db_name = os.getenv('DBNAME')
 db_user = os.getenv('DBUSER')
 db_pass = os.getenv('DBPASS')
-db_host = 'stakoor.postgres.database.azure.com'
+db_host = os.getenv('DBHOST')
 db_port = '5432'
 
 # Connecto to the database

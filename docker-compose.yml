@@ -1,19 +1,31 @@
 version: '3.8'
 services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_pw
+      POSTGRES_DB_FILE: /run/secrets/db
+    secrets:
+      - user
+      - postgres_pw
+      - db
+    ports:
+      - '0.0.0.0:5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      main:
+        aliases:
+          - db
   discord:
     build:
       context: .
       dockerfile: Dockerfile.discord
-    image: stakeappgrp.azurecr.io/discord
     restart: always
-    deploy:
-      resources:
-        reservations:
-          cpus: '0.5'
-          memory: 2G
-        limits:
-          cpus: '1'
-          memory: 3G
+    depends_on:
+      - db
     networks:
       main:
         aliases:
@@ -22,10 +34,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.api
-    image: stakeappgrp.azurecr.io/api
     restart: always
+    depends_on:
+      - db
     ports:
-      - '0.0.0.0:80:80'
+      - '0.0.0.0:8080:80'
     networks:
       main:
         aliases:
@@ -34,19 +47,22 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.load
-    image: stakeappgrp.azurecr.io/loader
     restart: always
-    deploy:
-      resources:
-        reservations:
-          cpus: '0.5'
-          memory: 2G
-        limits:
-          cpus: '1'
-          memory: 3G
+    depends_on:
+      - db
     networks:
       main:
         aliases:
           - loader
+volumes:
+  db:
+    driver: local
 networks:
   main:
+secrets:
+  postgres_pw:
+    file: postgres_pw.txt
+  user:
+    file: postgres_user.txt
+  db:
+    file: postgres_db.txt
